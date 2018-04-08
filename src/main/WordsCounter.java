@@ -20,6 +20,8 @@ class WordsCounter {
             stringBuilder.append((char) a);
         }
 
+        fileInputStream.close();
+
         String[] originalFileDataStringArray = stringBuilder.toString().split(" ");
 
         String keyWords = "private, protected, public, abstract, class, extends, final, implements, interface, " +
@@ -41,12 +43,13 @@ class WordsCounter {
             }
         }
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream("keyWordsCount")) {
-            for (String string : counterMap.keySet()) {
-                fileOutputStream.write((string + " ").getBytes());
-                fileOutputStream.write(counterMap.get(string).toString().getBytes());
-                fileOutputStream.write("\n".getBytes());
-            }
+        FileOutputStream fileOutputStream = new FileOutputStream("keyWordsCount");
+        for (String string : counterMap.keySet()) {
+            fileOutputStream.write((string + " ").getBytes());
+            fileOutputStream.write(counterMap.get(string).toString().getBytes());
+            fileOutputStream.write("\n".getBytes());
         }
+        fileOutputStream.close();
     }
+
 }
